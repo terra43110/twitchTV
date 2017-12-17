@@ -1,0 +1,80 @@
+/*
+ * Extra Small devices (portrait phones)
+ * No media query, since the XS breakpoint has no lower bound on its width
+ */
+
+/*
+ * TODO list
+ * 1. dim offline cards and change background-color of online cards
+ * DONE 2. add margin to both left and right sides of each card
+ * 3. center text and increase font-size of header and change background-color
+ * 4. center addition details and change font
+ * 5. have each card light up when mouse hovers
+ *
+ */
+
+body {
+  /*** TESTING ***/
+  padding: 1rem;
+  background: #4E377B;
+  color: rgba(256,256,256,1);
+}
+
+/*** Class ***/
+.center-block {
+}
+
+.list-group {
+  list-style-type: none;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.list-group-item {
+  margin-bottom: 1rem !important;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.profile-image {
+  max-height: 8rem;
+  margin-right: 3rem;
+  border-radius: 8px;
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.badge {
+  font-weight: bold;
+  font-size: 2rem;
+  float: right;
+}
+
+#badge-online {
+  background: green;
+}
+
+#badge-offline {
+  background: red;
+}
+
+/* Small devices (landscape phones+, more than 543px) */
+@media (min-width: 544px) {
+}
+
+/* Medium devices (tablets phones+, more than 767px) */
+@media (min-width: 768px) {
+}
+
+/* Large devices (desktop+, more than 991px) */
+@media (min-width: 992px) {
+}
+
+/* Extra Large devices (large desktops+, more than 1199px) */
+@media (min-width: 1200px) {
+}
+
