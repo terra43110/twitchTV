@@ -1,6 +1,7 @@
 "use strict";
 
 const broadcasters = [
+    { name: 'artosistv' },
     //    { name: 'cretetion' },
     //    { name: 'dnegspoker' },
     //    { name: 'doublelift' },
@@ -13,42 +14,44 @@ const broadcasters = [
     //    { name: 'storbeck' },
 
     // Overwatch Players
-    { name: 'esl_alphacast' },
+    { name: 'dafran' },
+    //    { name: 'esl_alphacast' },
+    { name: 'jake_overwatch' },
+    //    { name: 'lirik' },
+    //    { name: 'moonmoon_ow' },
     { name: 'timthetatman' },
-    { name: 'lirik' },
-    { name: 'moonmoon_ow' },
-    { name: 'xqcow' },
-    { name: 'wraxu' },
+    //    { name: 'xqcow' },
+    //    { name: 'wraxu' },
 
-    // Heartstone Players
-    { name: 'amazhs' },
-    { name: 'savjz' },
-    { name: 'disguisedtoasths' },
-    { name: 'trumpsc' },
+    // Hearthstone Players
+    //    { name: 'amazhs' },
     { name: 'day9tv' },
-    { name: 'hsdogdog' },
+    //    { name: 'hsdogdog' },
+    { name: 'itshafu' },
+    //    { name: 'savjz' },
+    { name: 'disguisedtoasths' },
+    //    { name: 'trumpsc' },
 ];
 
 $(document).ready( function() {
-    testView.renderList(); // startup default: streams should all be offline
-    test.init();
-    // view.init();
+    view.renderList(); // startup default: streams should all be offline
+    model.init();
 });
 
-const test = {
+const model = {
     init() {
         broadcasters.forEach(broadcaster => {
-            return testHandler.getUsers(broadcaster.name)
+            return handler.getUsers(broadcaster.name)
             .then(data => {
-                return testHandler.getStreams(data);
+                return handler.getStreams(data);
             })
             .then(([eachBroadcaster_user_id, eachBroadcaster_game_id]) => {
                 if (Number(eachBroadcaster_game_id) === 488552 || Number(eachBroadcaster_game_id) === 138585) {
-                    return testHandler.getStreamsMetadata(eachBroadcaster_user_id, eachBroadcaster_game_id);
+                    return handler.getStreamsMetadata(eachBroadcaster_user_id, eachBroadcaster_game_id);
                 }
             })
             .then(() => {
-                testView.renderList();
+                view.renderList();
             })
             .then(() => {
                 console.log('1 BROADCASTERS:\n', broadcasters); // LOG
@@ -57,7 +60,7 @@ const test = {
     },
 }
 
-const testHandler = {
+const handler = {
     getUsers(name) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
@@ -142,17 +145,14 @@ const testHandler = {
     },
 
     humanTimeFromUTC(utcTime) {
-        /*
-         * argument should be UTC time, retrieved from Twitch API
-         */
-
+        // argument should be UTC time, retrieved from Twitch API
         let humanTime = new Date(utcTime);
 
         return humanTime.toLocaleDateString() + " " + humanTime.toLocaleTimeString();
     },
 };
 
-const testView = {
+const view = {
     renderList() {
         const div_broadcasters = document.getElementById('div-broadcasters');
         div_broadcasters.innerHTML = '';
@@ -176,7 +176,7 @@ const testView = {
                                </h4>
                                <p class="list-group-item-text">${broadcaster.streams.viewer_count.toLocaleString()} watching</p>
                                <p class="list-group-item-text">stream type: ${broadcaster.streams.type}</p>
-                               <p class="list-group-item-text">stream started: ${testHandler.humanTimeFromUTC(broadcaster.streams.started_at)}</p>`;
+                               <p class="list-group-item-text">stream started: ${handler.humanTimeFromUTC(broadcaster.streams.started_at)}</p>`;
 
                 if (Number(broadcaster.streams.game_id) === 488552 && broadcaster.streamsMetadata) { // Overwatch
                     if (broadcaster.streamsMetadata.overwatch.broadcaster.hero) {
@@ -188,7 +188,7 @@ const testView = {
 
                         a.append(hero);
                     }
-                } else if (Number(broadcaster.streams.game_id) === 138585 && broadcaster.streamsMetadata) { // Heartstone
+                } else if (Number(broadcaster.streams.game_id) === 138585 && broadcaster.streamsMetadata) { // Hearthstone
                     try {
                         if (broadcaster.streamsMetadata.hearthstone.broadcaster.hero) {
                             const hero = document.createElement('ul');
